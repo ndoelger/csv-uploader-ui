@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { csvParse } from '../utilities/papa';
 import LogoutButton from '../components/LogoutButton';
 
-function UploadCSV({ userId }) {
+type Props = { userId?: string };
+
+const UploadCSV: React.FC<Props> = ({ userId }) => {
   const [formData, setFormData] = useState({
     json: '',
     title: '',
     userId: userId,
   });
-
-  const [csvData, setCsvData] = useState('');
 
   const getData = async () => {
     try {
@@ -47,7 +47,10 @@ function UploadCSV({ userId }) {
       console.log(target.result);
       const csv = target.result as string;
       console.log(csv);
-      setCsvData(csv);
+
+      const parsedJSON = csvParse(csv);
+
+      setFormData({ ...formData, json: JSON.stringify(parsedJSON.data) });
     };
 
     fileReader.readAsText(file);
@@ -55,13 +58,11 @@ function UploadCSV({ userId }) {
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const parsedJSON = csvParse(csvData);
-    console.log(parsedJSON);
 
     try {
       const response = await fetch('http://127.0.0.1:5000/', {
         method: 'POST',
-        body: JSON.stringify(parsedJSON.data),
+        body: formData.json,
         headers: { 'Content-Type': 'application/json' },
       });
 
@@ -80,13 +81,13 @@ function UploadCSV({ userId }) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleChange} />
+        <input type="text" name="title" onChange={handleChange} />
         <input type="file" accept=".csv" onChange={handleFileUpload} />
         <button>Submit</button>
       </form>
       <LogoutButton />
     </div>
   );
-}
+};
 
 export default UploadCSV;
