@@ -11,18 +11,6 @@ const UploadCSV: React.FC<Props> = ({ userId }) => {
     userId: userId,
   });
 
-  const getData = async () => {
-    try {
-      const response = await fetch('http://127.0.0.1:5000/');
-
-      const body = await response.json();
-
-      console.log(body);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const newData = { ...formData, [evt.target.name]: evt.target.value };
     setFormData(newData);
@@ -74,9 +62,7 @@ const UploadCSV: React.FC<Props> = ({ userId }) => {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+
 
   return (
     <div>
