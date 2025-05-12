@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Modal, Box } from '@mui/material';
+import { csvParse } from '../utilities/papa';
 
-type Props = { title?: string };
+type Props = { title?: string; userId?: string };
 
 const style = {
   position: 'absolute',
@@ -15,11 +16,66 @@ const style = {
   p: 4,
 };
 
-const ExistingCSVComponent: React.FC<Props> = ({ title }) => {
+const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
   const [open, setOpen] = useState(false);
+
+  const [editData, setEditData] = useState({
+    oldTitle: title?.split('.')[0],
+    newTitle: title?.split('.')[0],
+    newJson: '',
+    userId: userId,
+  });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const newData = { ...editData, [evt.target.name]: evt.target.value };
+    setEditData(newData);
+  };
+
+  const handleFileUpload = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+
+    const file = evt.target.files?.[0];
+
+    if (!file) {
+      console.log('no file submitted');
+      return;
+    }
+
+    const fileReader = new FileReader();
+
+    fileReader.onload = ({ target }) => {
+      if (!target?.result) return;
+
+      const newCsv = target.result as string;
+
+      const parsedJSON = csvParse(newCsv);
+
+      setEditData({ ...editData, newJson: JSON.stringify(parsedJSON.data) });
+    };
+
+    fileReader.readAsText(file);
+  };
+
+  const handleSubmit = async (evt: React.ChangeEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/${userId}`, {
+        method: 'POST',
+        body: JSON.stringify(editData),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const body = await response.json();
+
+      console.log(body);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -27,9 +83,19 @@ const ExistingCSVComponent: React.FC<Props> = ({ title }) => {
       <button onClick={handleOpen}>Edit Button</button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <form action="">
-            <input type="text" name="title" value={title?.split(".")[0]}></input>
-            <input type="file" accept=".csv"></input>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="newTitle"
+              value={editData.newTitle}
+              onChange={handleChange}
+            ></input>
+            <input
+              type="file"
+              accept=".csv"
+              onChange={handleFileUpload}
+            ></input>
+            <button>Update</button>
           </form>
         </Box>
       </Modal>
