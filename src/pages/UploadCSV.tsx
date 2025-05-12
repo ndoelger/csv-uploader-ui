@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { csvParse } from '../utilities/papa';
 import LogoutButton from '../components/LogoutButton';
 
@@ -61,8 +61,6 @@ const UploadCSV: React.FC<Props> = ({ userId }) => {
       console.log(error);
     }
   };
-
-
 
   return (
     <div>

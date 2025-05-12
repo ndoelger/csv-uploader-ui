@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
+import ExistingCSVComponent from '../components/ExistingCSVComponent';
 
 type Props = { userId?: string };
 
-const ExistingCSV:React.FC<Props> = ({userId}) => {
+const ExistingCSV: React.FC<Props> = ({ userId }) => {
   const [csvData, setCsvData] = useState([]);
 
   const getData = async () => {
     try {
-    
-      const response = await fetch(`http://127.0.0.1:5000/${userId}`,);
+      const response = await fetch(`http://127.0.0.1:5000/${userId}`);
 
       const body = await response.json();
 
@@ -22,7 +22,13 @@ const ExistingCSV:React.FC<Props> = ({userId}) => {
     getData();
   }, []);
 
-  return <div>{csvData}</div>;
+  return (
+    <div>
+      {csvData.map((entry) => (
+        <ExistingCSVComponent title={entry} />
+      ))}
+    </div>
+  );
 };
 
 export default ExistingCSV;
