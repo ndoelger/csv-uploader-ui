@@ -24,9 +24,14 @@ const ExistingCSV: React.FC<Props> = ({ userId }) => {
 
   return (
     <div>
-      {csvData.map((entry) => (
-        <ExistingCSVComponent title={entry} />
-      ))}
+      {csvData.map((entry: string) => {
+        const textToSlice = `${userId}/`;
+        return (
+          <ExistingCSVComponent
+            title={entry.slice(entry.indexOf(textToSlice) + textToSlice.length)}
+          />
+        );
+      })}
     </div>
   );
 };
