@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+// import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 // import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -35,18 +35,17 @@ const ExistingCSV: React.FC<Props> = ({ userId }) => {
       <TableContainer component={Paper}>
         <Table>
           <TableBody>
-            {csvData.map((entry: string) => {
+            {csvData.map((entry: string, index: number) => {
               const textToSlice = `${userId}/`;
               return (
                 <TableRow>
-                  <TableCell>
-                    <ExistingCSVComponent
-                      title={entry.slice(
-                        entry.indexOf(textToSlice) + textToSlice.length
-                      )}
-                      userId={userId}
-                    />
-                  </TableCell>
+                  <ExistingCSVComponent
+                    title={entry.slice(
+                      entry.indexOf(textToSlice) + textToSlice.length
+                    )}
+                    userId={userId}
+                    key={index}
+                  />
                 </TableRow>
               );
             })}

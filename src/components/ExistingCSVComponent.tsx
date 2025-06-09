@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { Modal, Box } from '@mui/material';
-
+import { Modal, Box, TableCell } from '@mui/material';
 
 import { csvParse } from '../utilities/papa';
 
@@ -65,10 +64,18 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
   const handleSubmit = async (evt: React.ChangeEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
+    // CONVERSION TO SNAKE_CASE
+    const payload = {
+      new_json: editData.newJson,
+      old_title: editData.oldTitle,
+      new_title: editData.newTitle,
+      user_id: editData.userId,
+    };
+
     try {
-      const response = await fetch(`http://127.0.0.1:5000/${userId}`, {
-        method: 'POST',
-        body: JSON.stringify(editData),
+      const response = await fetch('http://127.0.0.1:5000/', {
+        method: 'PUT',
+        body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json' },
       });
 
@@ -82,8 +89,12 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
 
   return (
     <>
-      <div>{title}</div>
-      <button onClick={handleOpen}>Edit Button</button>
+      <TableCell>
+        <div>{title}</div>
+      </TableCell>
+      <TableCell align="right">
+        <button onClick={handleOpen}>Edit</button>
+      </TableCell>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <form onSubmit={handleSubmit}>

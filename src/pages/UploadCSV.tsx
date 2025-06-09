@@ -46,11 +46,18 @@ const UploadCSV: React.FC<Props> = ({ userId }) => {
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    console.log(JSON.stringify(formData));
+
+    const payload = {
+      json: formData.json,
+      title: formData.title,
+      user_id: formData.userId
+    }
 
     try {
       const response = await fetch('http://127.0.0.1:5000/', {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json' },
       });
 
