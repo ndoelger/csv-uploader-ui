@@ -1,29 +1,28 @@
-import { useState, useEffect } from 'react';
-
 import { Stack, styled, Paper } from '@mui/material';
+
+import { useState, useEffect } from 'react';
 
 import ExistingCSVComponent from './ExistingCSVComponent';
 
-type Props = { userId?: string };
+type Props = { userId?: string; csvData?: string[] };
 
-const ExistingCSV: React.FC<Props> = ({ userId }) => {
+const CSVList: React.FC<Props> = ({ userId }) => {
   const [csvData, setCsvData] = useState([]);
 
-  const getData = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:5000/${userId}`);
-
-      const body = await response.json();
-
-      setCsvData(body);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/${userId}`);
+
+        const body = await response.json();
+
+        setCsvData(body);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getData();
-  }, []);
+  }, [userId]);
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
@@ -39,7 +38,7 @@ const ExistingCSV: React.FC<Props> = ({ userId }) => {
   return (
     <div>
       <Stack spacing={2}>
-        {csvData.map((entry: string, index: number) => {
+        {csvData?.map((entry: string, index: number) => {
           const textToSlice = `${userId}/`;
           return (
             <Item>
@@ -58,4 +57,4 @@ const ExistingCSV: React.FC<Props> = ({ userId }) => {
   );
 };
 
-export default ExistingCSV;
+export default CSVList;
