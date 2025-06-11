@@ -76,6 +76,7 @@ const UploadCSV: React.FC<Props> = ({ userId, getData }) => {
         onSubmit={handleSubmit}
         style={{
           display: 'flex',
+          textAlign: 'center',
           flexDirection: 'column',
           alignItems: 'center',
           gap: '15px',
@@ -90,9 +91,10 @@ const UploadCSV: React.FC<Props> = ({ userId, getData }) => {
           type="text"
           name="title"
           onChange={handleChange}
+          style={{ width: '100%', background: "white" }}
         />
         <input
-          style={{ display: 'flex' }}
+          style={{ display: 'inline-block' }}
           type="file"
           accept=".csv"
           onChange={handleFileUpload}
