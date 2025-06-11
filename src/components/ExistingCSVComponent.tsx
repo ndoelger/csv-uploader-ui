@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Modal, Box, TableCell } from '@mui/material';
+import { Modal, Box } from '@mui/material';
 
 import { csvParse } from '../utilities/papa';
 
@@ -88,13 +88,15 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
   };
 
   return (
-    <>
-      <TableCell>
-        <div>{title}</div>
-      </TableCell>
-      <TableCell align="right">
-        <button onClick={handleOpen}>Edit</button>
-      </TableCell>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <div>{title}</div>
+      <button onClick={handleOpen}>Edit</button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <form onSubmit={handleSubmit}>
@@ -113,7 +115,7 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
           </form>
         </Box>
       </Modal>
-    </>
+    </div>
   );
 };
 

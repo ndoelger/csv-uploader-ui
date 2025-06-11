@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { csvParse } from '../utilities/papa';
-import LogoutButton from '../components/LogoutButton';
+import { TextField } from '@mui/material';
 
-type Props = { userId?: string };
+type Props = { userId?: string; getData?: () => Promise<void> };
 
-const UploadCSV: React.FC<Props> = ({ userId }) => {
+const UploadCSV: React.FC<Props> = ({ userId, getData }) => {
   const [formData, setFormData] = useState({
     json: '',
     title: '',
@@ -51,8 +51,8 @@ const UploadCSV: React.FC<Props> = ({ userId }) => {
     const payload = {
       json: formData.json,
       title: formData.title,
-      user_id: formData.userId
-    }
+      user_id: formData.userId,
+    };
 
     try {
       const response = await fetch('http://127.0.0.1:5000/', {
@@ -64,6 +64,7 @@ const UploadCSV: React.FC<Props> = ({ userId }) => {
       const body = await response.json();
 
       console.log(body);
+      getData?.();
     } catch (error) {
       console.log(error);
     }
@@ -71,12 +72,33 @@ const UploadCSV: React.FC<Props> = ({ userId }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="title" onChange={handleChange} />
-        <input type="file" accept=".csv" onChange={handleFileUpload} />
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '15px',
+          justifyContent: 'center',
+          paddingBottom: '10px',
+        }}
+      >
+        <TextField
+          id="outlined-basic"
+          label="Title"
+          variant="outlined"
+          type="text"
+          name="title"
+          onChange={handleChange}
+        />
+        <input
+          style={{ display: 'flex' }}
+          type="file"
+          accept=".csv"
+          onChange={handleFileUpload}
+        />
         <button>Submit</button>
       </form>
-      <LogoutButton />
     </div>
   );
 };
