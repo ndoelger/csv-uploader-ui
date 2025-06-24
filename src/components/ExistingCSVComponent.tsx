@@ -31,10 +31,10 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const newData = { ...editData, [evt.target.name]: evt.target.value };
-    setEditData(newData);
-  };
+  // const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  //   const newData = { ...editData, [evt.target.name]: evt.target.value };
+  //   setEditData(newData);
+  // };
 
   const handleFileUpload = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
@@ -82,6 +82,8 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
       const body = await response.json();
 
       console.log(body);
+
+      handleClose();
     } catch (error) {
       console.log(error);
     }
@@ -100,12 +102,7 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="newTitle"
-              value={editData.newTitle}
-              onChange={handleChange}
-            ></input>
+            <h3>{editData.newTitle}</h3>
             <input
               type="file"
               accept=".csv"
