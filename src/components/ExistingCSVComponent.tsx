@@ -6,7 +6,7 @@ import { csvParse } from '../utilities/papa';
 
 type Props = { title?: string; userId?: string };
 
-const style = {
+const modal = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -16,9 +16,17 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  display: 'flex',
+  flexAlign: 'column',
+  textAlign: 'center',
+  justifyContent: 'center',
 };
 
+// const form =
+//   'display: flex; flex-align: colum; text-align: center; justifyContent: center';
+
 const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
+  console.log("render")
   const [open, setOpen] = useState(false);
 
   const [editData, setEditData] = useState({
@@ -28,8 +36,14 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
     userId: userId,
   });
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    console.log(open);
+    setOpen(true);
+    console.log(open);
+  };
+  const handleClose = () => {
+    setOpen(false)
+  };
 
   // const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
   //   const newData = { ...editData, [evt.target.name]: evt.target.value };
@@ -100,7 +114,7 @@ const ExistingCSVComponent: React.FC<Props> = ({ title, userId }) => {
       <div>{title}</div>
       <button onClick={handleOpen}>Edit</button>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
+        <Box sx={modal}>
           <form onSubmit={handleSubmit}>
             <h3>{editData.newTitle}</h3>
             <input

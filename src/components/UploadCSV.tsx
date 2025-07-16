@@ -26,7 +26,7 @@ const UploadCSV: React.FC<Props> = ({ userId, getData }) => {
       console.log('no file submitted');
       return;
     }
-
+  
     const fileReader = new FileReader();
 
     fileReader.onload = ({ target }) => {

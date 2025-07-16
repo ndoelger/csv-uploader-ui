@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# Client CSV Uploader UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+`Client CSV Uploader UI` is the frontend interface that connects with the CSV Uploader backend, allowing a user to upload and edit their own CSVs through this GUI.
 
-Currently, two official plugins are available:
+- List all objects in a user's s3 Bucket (user_id from a test `Auth0`)
+- Upload new CSV/JSON data to their s3 Bucket
+- Edit JSON data/title of existing object
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to run
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+To load all node modules 
+```sh
+$ npm i
 ```
+To run a local development application
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+$ npm run dev
 ```
+Create a test account in the Auth0 portal, this will use your `user_id` to send requests to the backend. A local backend must be running with authenticated AWS permissions in order to create/edit data.
+
+## Next Steps
+
+- More streamlined way to connect to AWS without the local profile
+- Implementation with Vistar Trafficking Repo
+- Flask improvements that align with Vistar standards
+  - Error handling
+  - Logging
+  - Environment configurations
+  - Security
+
+## Included modules support
+
+- [`Flask`] — base for application.
+- [`boto3`] — for uploading csv data to AWS.
+- [`flask_cors`] — grants access to client frontend.
+- [`flask_smorest`] — blueprint routing and error handling.
+- [`marshmallow`] — object/schema validation.
