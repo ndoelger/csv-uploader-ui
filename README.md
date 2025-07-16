@@ -21,9 +21,7 @@ Create a test account in the Auth0 portal, this will use your `user_id` to send 
 
 ## Next Steps
 
-- More streamlined way to connect to AWS without the local profile
-- Implementation with Vistar Trafficking Repo
-- Flask improvements that align with Vistar standards
+- Overall improvements that align with Vistar standards
   - Error handling
   - Logging
   - Environment configurations
@@ -31,8 +29,8 @@ Create a test account in the Auth0 portal, this will use your `user_id` to send 
 
 ## Included modules support
 
-- [`Flask`] — base for application.
-- [`boto3`] — for uploading csv data to AWS.
-- [`flask_cors`] — grants access to client frontend.
-- [`flask_smorest`] — blueprint routing and error handling.
-- [`marshmallow`] — object/schema validation.
+- [React] — UI framework for building component-based interfaces.
+- [@auth0/auth0-react] — authentication via Auth0.
+- [@mui/material] — modern UI components based on Material Design.
+- [papaparse] — client-side CSV parsing.
+- [eslint] — linting and code quality enforcement.

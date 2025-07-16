@@ -26,7 +26,7 @@ const UploadCSV: React.FC<Props> = ({ userId, getData }) => {
       console.log('no file submitted');
       return;
     }
-  
+
     const fileReader = new FileReader();
 
     fileReader.onload = ({ target }) => {
@@ -64,6 +64,7 @@ const UploadCSV: React.FC<Props> = ({ userId, getData }) => {
       const body = await response.json();
 
       console.log(body);
+      setFormData({ json: '', title: '', userId: userId });
       getData?.();
     } catch (error) {
       console.log(error);
@@ -90,8 +91,9 @@ const UploadCSV: React.FC<Props> = ({ userId, getData }) => {
           variant="outlined"
           type="text"
           name="title"
+          value={formData.title}
           onChange={handleChange}
-          style={{ width: '100%', background: "white" }}
+          style={{ width: '100%', background: 'white' }}
         />
         <input
           style={{ display: 'inline-block' }}

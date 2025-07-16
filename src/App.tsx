@@ -38,7 +38,7 @@ function App() {
   };
 
   useEffect(() => {
-    getData();
+    if (user) getData();
   }, [user]);
 
   return !isAuthenticated ? (
@@ -46,7 +46,7 @@ function App() {
   ) : (
     <>
       <LogoutButton />
-      <UploadCSV  />
+      <UploadCSV userId={user?.sub?.split('|')[1]} getData={getData} />
       <Stack spacing={2}>
         {csvData?.map((entry: string, index: number) => {
           const textToSlice = `${user?.sub?.split('|')[1]}/`;
