@@ -30,7 +30,7 @@ Create a test account in the Auth0 portal, this will use your `user_id` to send 
 ## Included modules support
 
 - [`React`] — UI framework for building component-based interfaces.
-- [`@auth0/auth0-react`] — authentication via Auth0.
-- [`@mui/material`] — modern UI components based on Material Design.
-- [`papaparse`] — client-side CSV parsing.
-- [`eslint`] — linting and code quality enforcement.
+- [`Auth0`] — authentication via Auth0.
+- [`Material UI`] — modern UI components based on Material Design.
+- [`Papaparse`] — client-side CSV parsing.
+- [`Eslint`] — linting and code quality enforcement.
